@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import profilePic from "../../public/og_c.jpeg";
 import {
@@ -25,8 +28,135 @@ import {
 } from "lucide-react";
 
 export default function Home() {
+  const [mousePos, setMousePos] = useState({ x: -200, y: -200 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  const calcParallax = (factor: number) => {
+    if (typeof window === "undefined") return { x: 0, y: 0 };
+    const x = (mousePos.x - window.innerWidth / 2) * factor;
+    const y = (mousePos.y - window.innerHeight / 2) * factor;
+    return { x, y };
+  };
+
+  const p1 = calcParallax(0.04);
+  const p2 = calcParallax(-0.03);
+  const p3 = calcParallax(0.02);
+
   return (
-    <div className="bg-darkbg text-slate-100 font-sans antialiased selection:bg-brand-500 selection:text-white min-h-screen">
+    <div className="bg-darkbg text-slate-100 font-sans antialiased selection:bg-brand-500 selection:text-white min-h-screen relative overflow-x-hidden">
+      {/* Interactive Cursor Spotlight */}
+      <div
+        className="pointer-events-none fixed z-30 transition-transform duration-75 ease-out rounded-full opacity-60 mix-blend-screen"
+        style={{
+          width: "450px",
+          height: "450px",
+          top: "-225px",
+          left: "-225px",
+          transform: `translate3d(${mousePos.x}px, ${mousePos.y}px, 0)`,
+          background:
+            "radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, rgba(99, 102, 241, 0.08) 45%, rgba(0,0,0,0) 70%)",
+        }}
+      />
+
+      {/* Floating Animated Interactive SVG Orbs */}
+      <div className="pointer-events-none fixed inset-0 z-10 overflow-hidden">
+        {/* SVG Mesh Grid Background */}
+        <svg
+          className="absolute inset-0 w-full h-full opacity-20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <pattern
+              id="grid-pattern"
+              width="40"
+              height="40"
+              patternUnits="userSpaceOnUse"
+            >
+              <path
+                d="M 40 0 L 0 0 0 40"
+                fill="none"
+                stroke="rgba(255, 255, 255, 0.05)"
+                strokeWidth="1"
+              />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid-pattern)" />
+        </svg>
+
+        {/* Dynamic Parallax Floating SVG Shapes */}
+        <svg
+          className="absolute top-20 left-10 w-72 h-72 opacity-30 transition-transform duration-300 ease-out"
+          style={{ transform: `translate3d(${p1.x}px, ${p1.y}px, 0)` }}
+          viewBox="0 0 200 200"
+        >
+          <circle
+            cx="100"
+            cy="100"
+            r="80"
+            fill="none"
+            stroke="url(#grad1)"
+            strokeWidth="1.5"
+            strokeDasharray="6,6"
+          />
+          <defs>
+            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="#818cf8" stopOpacity="0.2" />
+            </linearGradient>
+          </defs>
+        </svg>
+
+        <svg
+          className="absolute top-1/3 right-12 w-96 h-96 opacity-25 transition-transform duration-500 ease-out"
+          style={{ transform: `translate3d(${p2.x}px, ${p2.y}px, 0)` }}
+          viewBox="0 0 200 200"
+        >
+          <polygon
+            points="100,20 170,180 30,180"
+            fill="none"
+            stroke="url(#grad2)"
+            strokeWidth="2"
+          />
+          <defs>
+            <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.7" />
+              <stop offset="100%" stopColor="#ec4899" stopOpacity="0.1" />
+            </linearGradient>
+          </defs>
+        </svg>
+
+        <svg
+          className="absolute bottom-1/4 left-1/4 w-80 h-80 opacity-20 transition-transform duration-300 ease-out"
+          style={{ transform: `translate3d(${p3.x}px, ${p3.y}px, 0)` }}
+          viewBox="0 0 200 200"
+        >
+          <rect
+            x="40"
+            y="40"
+            width="120"
+            height="120"
+            rx="20"
+            fill="none"
+            stroke="url(#grad3)"
+            strokeWidth="1.5"
+          />
+          <defs>
+            <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#10b981" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.2" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
       {/* Navigation */}
       <nav className="fixed top-0 left-0 w-full z-50 bg-darkbg/80 backdrop-blur-md border-b border-slate-800">
         <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
@@ -108,7 +238,7 @@ export default function Home() {
       </section>
 
       {/* Key Metrics / Stats Section */}
-      <section className="py-12 bg-slate-900/50 border-y border-slate-800">
+      <section className="py-12 bg-slate-900/50 border-y border-slate-800 relative z-20">
         <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           <div>
             <h3 className="text-4xl font-bold text-white mb-1">9.64</h3>
@@ -130,7 +260,7 @@ export default function Home() {
       </section>
 
       {/* Experience Section */}
-      <section id="experience" className="py-24 px-6 max-w-6xl mx-auto">
+      <section id="experience" className="py-24 px-6 max-w-6xl mx-auto relative z-20">
         <div className="flex items-center gap-3 mb-12">
           <Briefcase className="w-7 h-7 text-brand-500" />
           <h2 className="text-3xl font-bold text-white tracking-tight">Work Experience & Leadership</h2>
@@ -138,7 +268,7 @@ export default function Home() {
 
         <div className="space-y-8">
           {/* Experience Item 1 */}
-          <div className="bg-cardbg border border-slate-800 rounded-xl p-8 hover:border-slate-700 transition-all">
+          <div className="bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-8 hover:border-slate-700 transition-all">
             <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
               <div>
                 <h3 className="text-xl font-bold text-white">Full-Stack Development Intern</h3>
@@ -153,7 +283,7 @@ export default function Home() {
           </div>
 
           {/* Experience Item 2 */}
-          <div className="bg-cardbg border border-slate-800 rounded-xl p-8 hover:border-slate-700 transition-all">
+          <div className="bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-8 hover:border-slate-700 transition-all">
             <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
               <div>
                 <h3 className="text-xl font-bold text-white">Projects Team Member</h3>
@@ -167,7 +297,7 @@ export default function Home() {
           </div>
 
           {/* Experience Item 3 */}
-          <div className="bg-cardbg border border-slate-800 rounded-xl p-8 hover:border-slate-700 transition-all">
+          <div className="bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-8 hover:border-slate-700 transition-all">
             <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
               <div>
                 <h3 className="text-xl font-bold text-white">Management Team Member</h3>
@@ -183,7 +313,7 @@ export default function Home() {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-24 px-6 bg-slate-900/30 border-t border-slate-800">
+      <section id="projects" className="py-24 px-6 bg-slate-900/30 border-t border-slate-800 relative z-20">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-3 mb-12">
             <Code className="w-7 h-7 text-brand-500" />
@@ -192,7 +322,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Project 1 */}
-            <div className="bg-cardbg border border-slate-800 rounded-xl p-6 flex flex-col justify-between hover:border-brand-500/50 transition-all">
+            <div className="bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-6 flex flex-col justify-between hover:border-brand-500/50 transition-all">
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-xs font-semibold px-2.5 py-1 rounded bg-brand-500/10 text-brand-500 border border-brand-500/20">AI & Computer Vision</span>
@@ -214,7 +344,7 @@ export default function Home() {
             </div>
 
             {/* Project 2 */}
-            <div className="bg-cardbg border border-slate-800 rounded-xl p-6 flex flex-col justify-between hover:border-brand-500/50 transition-all">
+            <div className="bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-6 flex flex-col justify-between hover:border-brand-500/50 transition-all">
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-xs font-semibold px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Full-Stack Web</span>
@@ -235,7 +365,7 @@ export default function Home() {
             </div>
 
             {/* Project 3 */}
-            <div className="bg-cardbg border border-slate-800 rounded-xl p-6 flex flex-col justify-between hover:border-brand-500/50 transition-all">
+            <div className="bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-6 flex flex-col justify-between hover:border-brand-500/50 transition-all">
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-xs font-semibold px-2.5 py-1 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">Mobile App</span>
@@ -256,7 +386,7 @@ export default function Home() {
             </div>
 
             {/* Project 4 */}
-            <div className="bg-cardbg border border-slate-800 rounded-xl p-6 flex flex-col justify-between hover:border-brand-500/50 transition-all">
+            <div className="bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-6 flex flex-col justify-between hover:border-brand-500/50 transition-all">
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-xs font-semibold px-2.5 py-1 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">AI & Multi-Agent Systems</span>
@@ -279,7 +409,7 @@ export default function Home() {
             </div>
 
             {/* Project 5 */}
-            <div className="bg-cardbg border border-slate-800 rounded-xl p-6 flex flex-col justify-between hover:border-brand-500/50 transition-all">
+            <div className="bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-6 flex flex-col justify-between hover:border-brand-500/50 transition-all">
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-xs font-semibold px-2.5 py-1 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">Web Game</span>
@@ -306,7 +436,7 @@ export default function Home() {
       </section>
 
       {/* Academic Milestones & Achievements */}
-      <section id="achievements" className="py-24 px-6 max-w-6xl mx-auto">
+      <section id="achievements" className="py-24 px-6 max-w-6xl mx-auto relative z-20">
         <div className="flex items-center gap-3 mb-12">
           <Award className="w-7 h-7 text-brand-500" />
           <h2 className="text-3xl font-bold text-white tracking-tight">Academic Journey & Highlights</h2>
@@ -314,7 +444,7 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Academic Success Card */}
-          <div className="bg-cardbg border border-slate-800 rounded-xl p-8 relative overflow-hidden">
+          <div className="bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-8 relative overflow-hidden">
             <div className="absolute -right-6 -bottom-6 w-32 h-32 bg-brand-500/10 rounded-full blur-2xl"></div>
             <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
               <GraduationCap className="text-brand-500" /> Academic Excellence
@@ -332,7 +462,7 @@ export default function Home() {
           </div>
 
           {/* Hackathon Spotlight Card */}
-          <div className="bg-cardbg border border-slate-800 rounded-xl p-8 relative overflow-hidden">
+          <div className="bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-8 relative overflow-hidden">
             <div className="absolute -right-6 -bottom-6 w-32 h-32 bg-purple-500/10 rounded-full blur-2xl"></div>
             <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
               <Trophy className="text-amber-400" /> DataSprint 24-Hour Hackathon
@@ -350,7 +480,7 @@ export default function Home() {
       </section>
 
       {/* Technical Skills Section */}
-      <section id="skills" className="py-24 px-6 bg-slate-900/30 border-t border-slate-800">
+      <section id="skills" className="py-24 px-6 bg-slate-900/30 border-t border-slate-800 relative z-20">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-3 mb-12">
             <Cpu className="w-7 h-7 text-brand-500" />
@@ -358,7 +488,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-cardbg border border-slate-800 rounded-xl p-6">
+            <div className="bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-6">
               <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
                 <Code2 className="w-5 h-5 text-brand-500" /> Languages
               </h3>
@@ -372,7 +502,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="bg-cardbg border border-slate-800 rounded-xl p-6">
+            <div className="bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-6">
               <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
                 <Layers className="w-5 h-5 text-brand-500" /> Web & Mobile
               </h3>
@@ -385,7 +515,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="bg-cardbg border border-slate-800 rounded-xl p-6">
+            <div className="bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-6">
               <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
                 <Database className="w-5 h-5 text-brand-500" /> Databases & Tools
               </h3>
@@ -401,7 +531,7 @@ export default function Home() {
           </div>
 
           {/* Certifications Row */}
-          <div className="mt-8 bg-cardbg border border-slate-800 rounded-xl p-6">
+          <div className="mt-8 bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-6">
             <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
               <CheckCircle2 className="w-5 h-5 text-brand-500" /> Certificates
             </h3>
@@ -482,7 +612,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer id="contact" className="py-12 border-t border-slate-800 bg-darkbg text-center">
+      <footer id="contact" className="py-12 border-t border-slate-800 bg-darkbg text-center relative z-20">
         <div className="max-w-6xl mx-auto px-6">
           <h3 className="text-2xl font-bold text-white mb-2">Let&apos;s Connect</h3>
           <p className="text-slate-400 text-sm mb-6">Open to software engineering internships and collaborative technical projects.</p>
