@@ -4,625 +4,917 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import profilePic from "../../public/og_c.jpeg";
 import {
-  Sparkles,
-  Code2,
-  ArrowRight,
-  Briefcase,
-  Code,
+  CodeXml,
+  Terminal,
+  Cpu,
+  GitBranch,
+  FolderOpen,
+  Mail,
   Award,
+  ExternalLink,
+  Play,
+  Sparkles,
+  Briefcase,
   GraduationCap,
   Trophy,
-  Cpu,
-  Layers,
-  Database,
   CheckCircle2,
   BadgeCheck,
   Brain,
-  Sparkles as SparklesIcon,
   MessageCircleQuestion,
   ShieldCheck,
   Container,
   ChartNoAxesCombined,
   Bot,
-  Mail,
+  Code2,
+  ChevronRight,
 } from "lucide-react";
 
 export default function Home() {
+  const [activeTab, setActiveTab] = useState("home");
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [mousePos, setMousePos] = useState({ x: -200, y: -200 });
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY });
     };
-
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  const calcParallax = (factor: number) => {
-    if (typeof window === "undefined") return { x: 0, y: 0 };
-    const x = (mousePos.x - window.innerWidth / 2) * factor;
-    const y = (mousePos.y - window.innerHeight / 2) * factor;
-    return { x, y };
+  const navItems = [
+    { id: "home", label: "main.ts", icon: CodeXml },
+    { id: "about", label: "about.md", icon: Terminal },
+    { id: "skills", label: "skills.json", icon: Cpu },
+    { id: "certifications", label: "certs.key", icon: BadgeCheck },
+    { id: "experience", label: "experience.git", icon: GitBranch },
+    { id: "projects", label: "projects/", icon: FolderOpen },
+    { id: "achievements", label: "milestones.log", icon: Award },
+    { id: "contact", label: "contact.exe", icon: Mail },
+  ];
+
+  const scrollToSection = (id: string) => {
+    setActiveTab(id);
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
-  const p1 = calcParallax(0.04);
-  const p2 = calcParallax(-0.03);
-  const p3 = calcParallax(0.02);
-
   return (
-    <div className="bg-darkbg text-slate-100 font-sans antialiased selection:bg-brand-500 selection:text-white min-h-screen relative overflow-x-hidden">
-      {/* Interactive Cursor Spotlight */}
+    <div className="min-h-screen bg-[#0a0b0e] text-[#e2e8f0] relative overflow-x-hidden font-sans selection:bg-orange-500/30 selection:text-orange-400">
+      {/* Interactive Cursor Spotlight Glow */}
       <div
-        className="pointer-events-none fixed z-30 transition-transform duration-75 ease-out rounded-full opacity-60 mix-blend-screen"
+        className="pointer-events-none fixed z-30 transition-transform duration-75 ease-out rounded-full opacity-40 mix-blend-screen hidden lg:block"
         style={{
-          width: "450px",
-          height: "450px",
-          top: "-225px",
-          left: "-225px",
+          width: "500px",
+          height: "500px",
+          top: "-250px",
+          left: "-250px",
           transform: `translate3d(${mousePos.x}px, ${mousePos.y}px, 0)`,
           background:
-            "radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, rgba(99, 102, 241, 0.08) 45%, rgba(0,0,0,0) 70%)",
+            "radial-gradient(circle, rgba(249, 115, 22, 0.15) 0%, rgba(59, 130, 246, 0.08) 40%, rgba(0,0,0,0) 70%)",
         }}
       />
 
-      {/* Floating Animated Interactive SVG Orbs */}
-      <div className="pointer-events-none fixed inset-0 z-10 overflow-hidden">
-        {/* SVG Mesh Grid Background */}
-        <svg
-          className="absolute inset-0 w-full h-full opacity-20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <defs>
-            <pattern
-              id="grid-pattern"
-              width="40"
-              height="40"
-              patternUnits="userSpaceOnUse"
+      {/* Grid Pattern Background */}
+      <div className="fixed inset-0 grid-bg pointer-events-none z-0"></div>
+
+      {/* Right Desktop Floating Indicator Bar */}
+      <div className="fixed right-6 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col items-center gap-4">
+        <div className="absolute top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-orange-500/20 to-transparent -z-10"></div>
+        {navItems.map((item) => {
+          const IconComponent = item.icon;
+          const isActive = activeTab === item.id;
+          return (
+            <button
+              key={item.id}
+              onClick={() => scrollToSection(item.id)}
+              className="group relative flex items-center justify-center w-12 h-12 transition-all duration-300 outline-none"
+              aria-label={item.label}
             >
-              <path
-                d="M 40 0 L 0 0 0 40"
-                fill="none"
-                stroke="rgba(255, 255, 255, 0.05)"
-                strokeWidth="1"
-              />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#grid-pattern)" />
-        </svg>
-
-        {/* Dynamic Parallax Floating SVG Shapes */}
-        <svg
-          className="absolute top-20 left-10 w-72 h-72 opacity-30 transition-transform duration-300 ease-out"
-          style={{ transform: `translate3d(${p1.x}px, ${p1.y}px, 0)` }}
-          viewBox="0 0 200 200"
-        >
-          <circle
-            cx="100"
-            cy="100"
-            r="80"
-            fill="none"
-            stroke="url(#grad1)"
-            strokeWidth="1.5"
-            strokeDasharray="6,6"
-          />
-          <defs>
-            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.8" />
-              <stop offset="100%" stopColor="#818cf8" stopOpacity="0.2" />
-            </linearGradient>
-          </defs>
-        </svg>
-
-        <svg
-          className="absolute top-1/3 right-12 w-96 h-96 opacity-25 transition-transform duration-500 ease-out"
-          style={{ transform: `translate3d(${p2.x}px, ${p2.y}px, 0)` }}
-          viewBox="0 0 200 200"
-        >
-          <polygon
-            points="100,20 170,180 30,180"
-            fill="none"
-            stroke="url(#grad2)"
-            strokeWidth="2"
-          />
-          <defs>
-            <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.7" />
-              <stop offset="100%" stopColor="#ec4899" stopOpacity="0.1" />
-            </linearGradient>
-          </defs>
-        </svg>
-
-        <svg
-          className="absolute bottom-1/4 left-1/4 w-80 h-80 opacity-20 transition-transform duration-300 ease-out"
-          style={{ transform: `translate3d(${p3.x}px, ${p3.y}px, 0)` }}
-          viewBox="0 0 200 200"
-        >
-          <rect
-            x="40"
-            y="40"
-            width="120"
-            height="120"
-            rx="20"
-            fill="none"
-            stroke="url(#grad3)"
-            strokeWidth="1.5"
-          />
-          <defs>
-            <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#10b981" stopOpacity="0.8" />
-              <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.2" />
-            </linearGradient>
-          </defs>
-        </svg>
+              <div className="absolute right-14 px-3 py-1.5 rounded-md bg-[#121318] border border-orange-500/20 text-xs font-mono whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0 pointer-events-none shadow-[0_0_15px_rgba(249,115,22,0.15)] flex items-center gap-2">
+                <span className="text-orange-400">&gt;</span>
+                <span className={isActive ? "text-orange-400 font-bold" : "text-slate-400"}>
+                  {item.label}
+                </span>
+              </div>
+              <div className="relative w-full h-full flex items-center justify-center">
+                {isActive && (
+                  <div
+                    className="absolute inset-0 m-auto rounded-full border border-orange-500/50 transition-all duration-500 ease-out w-full h-full opacity-100 rotate-180 scale-100"
+                    style={{ borderStyle: "dashed" }}
+                  />
+                )}
+                <div
+                  className={`rounded-full transition-all duration-300 ease-out flex items-center justify-center relative z-10 ${
+                    isActive
+                      ? "w-8 h-8 bg-[#0a0b0e] border border-orange-400 text-orange-400 shadow-[0_0_20px_rgba(249,115,22,0.4)]"
+                      : "w-3 h-3 bg-[#1a1c23] border border-slate-700 group-hover:w-4 group-hover:h-4 group-hover:border-orange-400/50 group-hover:bg-orange-500/20 text-slate-400"
+                  }`}
+                >
+                  <IconComponent
+                    className={`transition-all duration-300 ${
+                      isActive ? "w-4 h-4 opacity-100 scale-100" : "w-0 h-0 opacity-0 scale-0 group-hover:w-3 group-hover:h-3 group-hover:opacity-100 group-hover:scale-100"
+                    }`}
+                  />
+                </div>
+              </div>
+            </button>
+          );
+        })}
       </div>
 
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 w-full z-50 bg-darkbg/80 backdrop-blur-md border-b border-slate-800">
-        <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-          <a href="#" className="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-            <span className="text-brand-500">&lt;</span>Suja Shivani S A<span className="text-brand-500">/&gt;</span>
-          </a>
-
-          <div className="hidden md:flex gap-8 text-sm font-medium text-slate-300">
-            <a href="#about" className="hover:text-brand-500 transition-colors">About</a>
-            <a href="#experience" className="hover:text-brand-500 transition-colors">Experience</a>
-            <a href="#projects" className="hover:text-brand-500 transition-colors">Projects</a>
-            <a href="#achievements" className="hover:text-brand-500 transition-colors">Milestones</a>
-            <a href="#skills" className="hover:text-brand-500 transition-colors">Skills</a>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <a href="mailto:sujashivani.s2024@vitstudent.ac.in" className="bg-brand-500 hover:bg-brand-600 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all shadow-lg hover:shadow-brand-500/25">
-              Contact Me
-            </a>
-          </div>
+      {/* Mobile Bottom IDE Navigation Bar */}
+      <nav
+        className="fixed bottom-0 left-0 right-0 border-t border-[#1a1c23] bg-[#121318]/95 backdrop-blur-md z-50 lg:hidden"
+        style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+      >
+        <div className="grid grid-cols-7 items-center px-2 py-2">
+          {navItems.map((item) => {
+            const IconComponent = item.icon;
+            const isActive = activeTab === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className={`mx-auto inline-flex h-10 w-10 items-center justify-center rounded-lg transition-colors ${
+                  isActive ? "text-orange-400 bg-orange-500/10" : "text-slate-400 hover:text-white"
+                }`}
+                aria-label={item.label}
+              >
+                <IconComponent className="w-5 h-5" />
+              </button>
+            );
+          })}
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section id="about" className="min-h-screen flex items-center justify-center pt-24 pb-16 px-6 relative overflow-hidden">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
-        <div className="max-w-4xl mx-auto text-center z-10">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-500/30 bg-brand-500/10 text-brand-500 text-sm font-semibold mb-6">
-            <Sparkles className="w-4 h-4" /> Rank 7 | B.Tech CSE @ VIT Chennai
-          </div>
-
-          <div className="flex justify-center mb-8">
-            <Image
-              src={profilePic}
-              alt="Profile photo"
-              width={176}
-              height={176}
-              priority
-              className="w-36 h-36 md:w-44 md:h-44 rounded-full object-cover border-4 border-brand-500/30 shadow-2xl shadow-brand-500/20"
-            />
-          </div>
-
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-6 leading-tight">
-            Building Scalable Applications & <span className="gradient-text">AI Solutions</span>
-          </h1>
-
-          <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Computer Science student skilled in Full-Stack Development, Data Structures, and ML. Driven to solve complex technical challenges and engineer efficient, scalable systems.
-          </p>
-
-          <div className="flex flex-wrap justify-center items-center gap-3 mb-10">
-            <a href="https://www.linkedin.com/in/suja-shivani-573947337/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-brand-500/30 bg-brand-500/10 px-4 py-2 text-sm font-semibold text-brand-200 hover:bg-brand-500/20 hover:border-brand-500/50 transition-all" aria-label="LinkedIn">
-              <span>in</span> LinkedIn
-            </a>
-            <a href="https://github.com/Shivani-369" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900/60 px-4 py-2 text-sm font-semibold text-slate-200 hover:border-slate-500 hover:bg-slate-800 transition-all" aria-label="GitHub">
-              <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-              </svg>
-              GitHub
-            </a>
-            <a href="https://leetcode.com/u/Suja_Shivani_369/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-2 text-sm font-semibold text-amber-200 hover:bg-amber-500/20 transition-all" aria-label="LeetCode">
-              <Code2 className="w-4 h-4" /> LeetCode
-            </a>
-            <a href="mailto:sujashivani.s2024@vitstudent.ac.in" className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-200 hover:bg-emerald-500/20 transition-all" aria-label="Email">
-              <span>@</span> Email
-            </a>
-          </div>
-
-          <div className="flex flex-wrap items-center justify-center gap-4 mb-12">
-            <a href="#projects" className="bg-brand-500 hover:bg-brand-600 text-white px-8 py-3.5 rounded-lg text-base font-semibold transition-all glow-effect flex items-center gap-2">
-              View My Work <ArrowRight className="w-5 h-5" />
-            </a>
-            <a href="#contact" className="border border-slate-700 hover:border-slate-500 bg-slate-900/50 text-slate-200 px-8 py-3.5 rounded-lg text-base font-semibold transition-all">
-              Get in Touch
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Key Metrics / Stats Section */}
-      <section className="py-12 bg-slate-900/50 border-y border-slate-800 relative z-20">
-        <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          <div>
-            <h3 className="text-4xl font-bold text-white mb-1">9.64</h3>
-            <p className="text-sm text-slate-400">Current CGPA (VIT)</p>
-          </div>
-          <div>
-            <h3 className="text-4xl font-bold text-white mb-1">Rank 7</h3>
-            <p className="text-sm text-slate-400">Among 1000+ CSE Students</p>
-          </div>
-          <div>
-            <h3 className="text-4xl font-bold text-white mb-1">96%</h3>
-            <p className="text-sm text-slate-400">ML Model Accuracy (DataSprint)</p>
-          </div>
-          <div>
-            <h3 className="text-4xl font-bold text-white mb-1">2028</h3>
-            <p className="text-sm text-slate-400">Expected Graduation</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Experience Section */}
-      <section id="experience" className="py-24 px-6 max-w-6xl mx-auto relative z-20">
-        <div className="flex items-center gap-3 mb-12">
-          <Briefcase className="w-7 h-7 text-brand-500" />
-          <h2 className="text-3xl font-bold text-white tracking-tight">Work Experience & Leadership</h2>
-        </div>
-
-        <div className="space-y-8">
-          {/* Experience Item 1 */}
-          <div className="bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-8 hover:border-slate-700 transition-all">
-            <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
-              <div>
-                <h3 className="text-xl font-bold text-white">Full-Stack Development Intern</h3>
-                <p className="text-brand-500 font-medium">UV Farms • Internship</p>
-              </div>
-              <span className="text-sm text-slate-400 bg-slate-800/80 px-3 py-1 rounded-full w-fit mt-2 md:mt-0">May 2026 – Jun 2026</span>
+      {/* Main Content Workspace Area */}
+      <main className="w-full min-h-screen pb-20 lg:pb-0">
+        {/* HERO SECTION (main.ts) */}
+        <section
+          id="home"
+          className="min-h-screen flex items-center justify-center relative overflow-hidden py-20 lg:py-0"
+        >
+          <div className="absolute inset-0 z-0 select-none">
+            <div className="absolute inset-0 grid-bg opacity-30 pointer-events-none"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0a0b0e] via-transparent to-[#0a0b0e] z-10"></div>
+            <div className="absolute top-20 right-20 font-mono text-xs text-orange-500/20 hidden lg:block">
+              &lt;System.Init /&gt;
             </div>
-            <ul className="list-disc list-inside text-slate-300 space-y-2 text-sm leading-relaxed">
-              <li>Developed full-stack web solutions using Next.js, integrating responsive UIs with robust backend APIs.</li>
-              <li>Built core features across <strong>ProxiHub</strong>, <strong>Raaj Hotels</strong>, and <strong>VidhyaBot</strong>, optimizing frontend performance, booking workflows, and document processing systems.</li>
-            </ul>
-          </div>
-
-          {/* Experience Item 2 */}
-          <div className="bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-8 hover:border-slate-700 transition-all">
-            <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
-              <div>
-                <h3 className="text-xl font-bold text-white">Projects Team Member</h3>
-                <p className="text-brand-500 font-medium">CodeChef VIT-Chennai Chapter</p>
-              </div>
-              <span className="text-sm text-slate-400 bg-slate-800/80 px-3 py-1 rounded-full w-fit mt-2 md:mt-0">Jan 2026 – Present</span>
+            <div className="absolute bottom-20 left-40 font-mono text-xs text-blue-500/20 hidden lg:block">
+              while(alive) &#123; code() &#125;
             </div>
-            <p className="text-slate-300 text-sm leading-relaxed">
-              Collaborating with team members to design technical events, build competitive programming solutions, and contribute to open-source software initiatives within the chapter.
-            </p>
           </div>
 
-          {/* Experience Item 3 */}
-          <div className="bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-8 hover:border-slate-700 transition-all">
-            <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
-              <div>
-                <h3 className="text-xl font-bold text-white">Management Team Member</h3>
-                <p className="text-brand-500 font-medium">IEEE Women in Engineering (WIE)</p>
-              </div>
-              <span className="text-sm text-slate-400 bg-slate-800/80 px-3 py-1 rounded-full w-fit mt-2 md:mt-0">Sep 2024 – Jan 2026</span>
-            </div>
-            <p className="text-slate-300 text-sm leading-relaxed">
-              Organized technical workshops, webinars, and outreach campaigns to empower and encourage women in engineering and tech streams.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Projects Section */}
-      <section id="projects" className="py-24 px-6 bg-slate-900/30 border-t border-slate-800 relative z-20">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex items-center gap-3 mb-12">
-            <Code className="w-7 h-7 text-brand-500" />
-            <h2 className="text-3xl font-bold text-white tracking-tight">Featured Projects</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Project 1 */}
-            <div className="bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-6 flex flex-col justify-between hover:border-brand-500/50 transition-all">
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs font-semibold px-2.5 py-1 rounded bg-brand-500/10 text-brand-500 border border-brand-500/20">AI & Computer Vision</span>
-                  <span className="text-xs text-amber-400 font-semibold">DataSprint &apos;25 Finalist</span>
+          <div className="relative z-10 max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            {/* Hero Left Content */}
+            <div className="space-y-8 text-center lg:text-left order-2 lg:order-1">
+              <div className="space-y-4">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded border border-orange-500/30 bg-orange-500/5 text-orange-400 text-xs font-mono mb-4">
+                  <span className="relative flex h-2 w-2">
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500 shadow-[0_0_6px_rgba(249,115,22,0.8)]"></span>
+                  </span>
+                  SYSTEM.KERNEL :: RANK 7 B.TECH CSE @ VIT CHENNAI
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">Potato Disease & Defect Detector</h3>
-                <p className="text-slate-400 text-sm mb-6 leading-relaxed">
-                  Built a CNN model achieving 96% accuracy to classify hidden internal defects (like hollow heart) from X-ray and leaf images. Integrated with Python/TypeScript backends.
+
+                <h1 className="text-5xl lg:text-7xl font-bold tracking-tight">
+                  <span className="text-white">Hello, I&apos;m </span>
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-amber-300 to-blue-500 relative inline-block">
+                    Suja Shivani S A
+                    <div className="absolute -bottom-2 left-0 w-full h-1 bg-orange-500/50 rounded-full blur-sm"></div>
+                  </span>
+                </h1>
+
+                <p className="text-lg lg:text-xl text-slate-400 max-w-xl mx-auto lg:mx-0 font-light leading-relaxed">
+                  <span className="text-orange-400 font-mono">&lt;Developer /&gt;</span>{" "}
+                  Building Scalable Applications & AI Solutions. Computer Science student skilled in Full-Stack Web Development, Multi-Agent Systems, Data Structures, and ML.
                 </p>
               </div>
-              <div>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">Python</span>
-                  <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">TensorFlow</span>
-                  <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">Keras</span>
-                  <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">TypeScript</span>
-                </div>
-              </div>
-            </div>
 
-            {/* Project 2 */}
-            <div className="bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-6 flex flex-col justify-between hover:border-brand-500/50 transition-all">
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs font-semibold px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Full-Stack Web</span>
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">Personal Finance Tracker</h3>
-                <p className="text-slate-400 text-sm mb-6 leading-relaxed">
-                  A secure expense and investment tracking platform featuring JWT authentication, responsive dashboards with Recharts, and custom PostgreSQL database designs.
-                </p>
-              </div>
-              <div>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">React.js</span>
-                  <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">Node.js</span>
-                  <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">PostgreSQL</span>
-                  <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">JWT</span>
-                </div>
-              </div>
-            </div>
+              {/* Action Buttons styled like OS Kernel launch */}
+              <div className="flex flex-col sm:flex-row gap-4 items-stretch w-full max-w-xl mx-auto lg:mx-0">
+                <a
+                  href="#projects"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection("projects");
+                  }}
+                  className="relative group cursor-pointer flex-1 min-w-[240px]"
+                >
+                  <div
+                    className="absolute -inset-0.5 bg-gradient-to-r from-orange-500 to-blue-600 opacity-40 group-hover:opacity-80 transition duration-500"
+                    style={{ clipPath: "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)" }}
+                  ></div>
+                  <div
+                    className="relative bg-[#121318] border border-orange-500/40 p-4 flex items-center gap-4 hover:bg-[#1a1c23] transition-colors shadow-2xl h-full"
+                    style={{ clipPath: "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)" }}
+                  >
+                    <div className="relative w-10 h-10 shrink-0 flex items-center justify-center bg-orange-500/10 rounded-sm border border-orange-500/30 group-hover:border-orange-500/60 transition-all">
+                      <Terminal className="w-5 h-5 text-orange-400" />
+                    </div>
+                    <div className="flex-1 text-left min-w-0">
+                      <div className="flex justify-between items-center mb-1">
+                        <h3 className="text-sm font-bold text-white group-hover:text-orange-400 transition-colors truncate">
+                          Explore Work
+                        </h3>
+                        <ExternalLink className="w-3 h-3 text-slate-500 group-hover:text-orange-400 transition-colors ml-2" />
+                      </div>
+                      <div className="w-full bg-slate-800 h-1 rounded-full overflow-hidden mb-1">
+                        <div className="h-full bg-orange-500 w-[65%] group-hover:w-[90%] transition-all duration-700 ease-out relative">
+                          <div className="absolute inset-0 bg-white/30 animate-pulse-fast"></div>
+                        </div>
+                      </div>
+                      <div className="flex justify-between font-mono text-[9px] text-slate-500">
+                        <span className="truncate mr-2">&gt; sudo view_projects</span>
+                        <span className="text-orange-400 group-hover:animate-pulse whitespace-nowrap">Active</span>
+                      </div>
+                    </div>
+                  </div>
+                </a>
 
-            {/* Project 3 */}
-            <div className="bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-6 flex flex-col justify-between hover:border-brand-500/50 transition-all">
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs font-semibold px-2.5 py-1 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">Mobile App</span>
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">ShineShelf App</h3>
-                <p className="text-slate-400 text-sm mb-6 leading-relaxed">
-                  Cross-platform social-commerce application. Integrated material 3 design, Provider state management, REST APIs, and local secure storage.
-                </p>
-              </div>
-              <div>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">Flutter</span>
-                  <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">Dart</span>
-                  <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">REST APIs</span>
-                  <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">Provider</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Project 4 */}
-            <div className="bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-6 flex flex-col justify-between hover:border-brand-500/50 transition-all">
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs font-semibold px-2.5 py-1 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">AI & Multi-Agent Systems</span>
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">Orcha: Multi-Agent Supply Chain Orchestrator</h3>
-                <p className="text-slate-400 text-sm mb-4 leading-relaxed">
-                  Built an AI-powered multi-agent supply chain orchestration platform that optimized logistics routes using geospatial, weather, carbon, and financial data. Developed an explainable decision-support dashboard with interactive route maps, comparative scorecards, and real-time disruption simulations, while integrating a fault-tolerant FastAPI backend with LLM fallback models and API rate-limit recovery for reliable AI inference.
-                </p>
-              </div>
-              <div>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">Python</span>
-                  <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">FastAPI</span>
-                  <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">Streamlit</span>
-                  <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">AutoGen</span>
-                  <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">Plotly</span>
-                  <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">LLMs</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Project 5 */}
-            <div className="bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-6 flex flex-col justify-between hover:border-brand-500/50 transition-all">
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs font-semibold px-2.5 py-1 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">Web Game</span>
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">Wordwars: A Word Guessing Game</h3>
-                <p className="text-slate-400 text-sm mb-4 leading-relaxed">
-                  A clean browser-based word puzzle game where players guess a 5-letter word in six tries using color-coded feedback and a mobile-friendly keyboard.
-                </p>
-                <a href="https://wordwars-pi.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-brand-500 hover:text-brand-400 transition-colors">
-                  Play it here &rarr;
+                <a
+                  href="https://github.com/Shivani-369"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative group cursor-pointer sm:w-auto shrink-0"
+                >
+                  <div
+                    className="absolute -inset-0.5 bg-gradient-to-r from-orange-500 to-amber-400 opacity-20 group-hover:opacity-60 transition duration-500"
+                    style={{ clipPath: "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)" }}
+                  ></div>
+                  <div
+                    className="relative bg-[#121318] border border-orange-500/30 group-hover:border-orange-500/50 p-4 flex items-center justify-center gap-3 hover:bg-[#1a1c23] transition-colors shadow-xl h-full min-w-[120px]"
+                    style={{ clipPath: "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)" }}
+                  >
+                    <svg className="w-5 h-5 fill-current text-white group-hover:text-orange-400 transition-colors" viewBox="0 0 24 24">
+                      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                    </svg>
+                    <div className="text-left">
+                      <div className="text-[10px] text-slate-400 font-mono leading-none mb-0.5">Check out</div>
+                      <div className="font-bold text-white group-hover:text-orange-400 transition-colors leading-none">GitHub</div>
+                    </div>
+                  </div>
                 </a>
               </div>
-              <div>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">HTML5</span>
-                  <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">CSS3</span>
-                  <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">JavaScript</span>
-                  <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">Tailwind CSS</span>
+
+              {/* Module Stack Badges */}
+              <div className="pt-4 flex flex-wrap justify-center lg:justify-start gap-2 opacity-90">
+                <span className="text-xs font-mono text-slate-500 mr-2 py-1">LOADED_MODULES:</span>
+                {["NEXT.JS", "REACT", "PYTHON", "JAVA", "FLUTTER", "POSTGRESQL", "TENSORFLOW"].map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-2 py-1 bg-orange-500/5 border border-orange-500/20 text-orange-400/90 text-[10px] font-mono rounded tracking-wider hover:bg-orange-500/10 hover:border-orange-500/40 transition-colors cursor-default"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Hero Right Code Window */}
+            <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
+              <div className="w-full max-w-xl relative">
+                <div className="absolute -inset-4 bg-gradient-to-r from-orange-500/10 to-blue-500/10 rounded-xl blur-xl -z-10"></div>
+                <div className="w-full shadow-2xl overflow-hidden rounded-xl border border-[#1a1c23] bg-[#0a0b0e]">
+                  <div className="flex items-center justify-between px-4 py-3 bg-[#121318] border-b border-[#1a1c23]">
+                    <div className="flex gap-2">
+                      <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
+                      <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                      <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
+                    </div>
+                    <div className="font-mono text-xs text-slate-400 flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-orange-400 animate-pulse"></span>
+                      portfolio.tsx
+                    </div>
+                    <div className="w-10"></div>
+                  </div>
+
+                  <div className="p-4 sm:p-6 font-mono text-xs sm:text-sm leading-relaxed space-y-1.5 overflow-x-auto text-slate-300">
+                    <div><span className="text-slate-600 mr-4 select-none">1</span><span className="text-purple-400">import</span> &#123; <span className="text-orange-400">SoftwareEngineer</span> &#125; <span className="text-purple-400">from</span> <span className="text-green-400">&apos;./vit-chennai&apos;</span>;</div>
+                    <div><span className="text-slate-600 mr-4 select-none">2</span></div>
+                    <div><span className="text-slate-600 mr-4 select-none">3</span><span className="text-purple-400">const</span> <span className="text-yellow-400">Portfolio</span> = () =&gt; &#123;</div>
+                    <div className="pl-4"><span className="text-slate-600 mr-4 select-none">4</span><span className="text-purple-400">return</span> (</div>
+                    <div className="pl-8"><span className="text-slate-600 mr-4 select-none">5</span>&lt;<span className="text-blue-400">SoftwareEngineer</span></div>
+                    <div className="pl-12"><span className="text-slate-600 mr-4 select-none">6</span><span className="text-orange-400">name</span>=<span className="text-green-400">&quot;Suja Shivani S A&quot;</span></div>
+                    <div className="pl-12"><span className="text-slate-600 mr-4 select-none">7</span><span className="text-orange-400">gpa</span>=&#123;<span className="text-amber-400">9.64</span>&#125;</div>
+                    <div className="pl-12"><span className="text-slate-600 mr-4 select-none">8</span><span className="text-orange-400">rank</span>=<span className="text-green-400">&quot;7 / 1000+ CSE Students&quot;</span></div>
+                    <div className="pl-12"><span className="text-slate-600 mr-4 select-none">9</span><span className="text-orange-400">specialization</span>=<span className="text-green-400">&quot;Full-Stack &amp; AI Systems&quot;</span></div>
+                    <div className="pl-8"><span className="text-slate-600 mr-4 select-none">10</span>/&gt;</div>
+                    <div className="pl-4"><span className="text-slate-600 mr-4 select-none">11</span>);</div>
+                    <div><span className="text-slate-600 mr-4 select-none">12</span>&#125;;</div>
+
+                    <div className="pt-6 flex items-center gap-4">
+                      <a
+                        href="https://leetcode.com/u/Suja_Shivani_369/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex items-center gap-2 px-5 py-2.5 bg-orange-500/10 border border-orange-500/30 rounded-lg hover:bg-orange-500/20 hover:border-orange-500/50 transition-all duration-300 cursor-pointer"
+                      >
+                        <Play className="w-4 h-4 text-orange-400 group-hover:scale-110 transition-transform" />
+                        <span className="font-mono text-sm text-orange-400">Run LeetCode</span>
+                      </a>
+                      <a
+                        href="https://www.linkedin.com/in/suja-shivani-573947337/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex items-center gap-2 px-5 py-2.5 border border-slate-700 rounded-lg hover:border-orange-500/30 transition-all duration-300 bg-transparent cursor-pointer"
+                      >
+                        <span className="font-mono text-xs font-bold text-slate-400 group-hover:text-orange-400 transition-colors">in</span>
+                        <span className="font-mono text-sm text-slate-400 group-hover:text-white">LinkedIn</span>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Academic Milestones & Achievements */}
-      <section id="achievements" className="py-24 px-6 max-w-6xl mx-auto relative z-20">
-        <div className="flex items-center gap-3 mb-12">
-          <Award className="w-7 h-7 text-brand-500" />
-          <h2 className="text-3xl font-bold text-white tracking-tight">Academic Journey & Highlights</h2>
-        </div>
+        {/* ABOUT SECTION (about.md) */}
+        <section id="about" className="min-h-screen flex items-center py-20 px-6 lg:px-12 relative border-t border-[#1a1c23]">
+          <div className="max-w-6xl mx-auto w-full">
+            <div className="flex items-center gap-4 mb-12">
+              <Terminal className="w-6 h-6 text-orange-400" />
+              <h2 className="font-mono text-2xl lg:text-3xl font-bold">
+                <span className="text-slate-500">#</span> About.system
+              </h2>
+            </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Academic Success Card */}
-          <div className="bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-8 relative overflow-hidden">
-            <div className="absolute -right-6 -bottom-6 w-32 h-32 bg-brand-500/10 rounded-full blur-2xl"></div>
-            <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-              <GraduationCap className="text-brand-500" /> Academic Excellence
-            </h3>
-            <p className="text-slate-300 text-sm leading-relaxed mb-4">
-              Secured <strong>Rank 7 in the B.Tech CSE (Core) branch among 1000+ students</strong>.
-            </p>
-            <p className="text-slate-400 text-sm leading-relaxed">
-              Began Semester 1 with a 9.36 GPA and consistently elevated academic standing through discipline and practical project work, achieving a <strong>CGPA of 9.65</strong> by Semester 3.
-            </p>
-            <ul className="text-slate-400 text-sm space-y-2 list-disc list-inside mt-4">
-              <li>Have won High Commendation HPS MUN 2020 representing Australia in UNEA.</li>
-              <li>Special Mention in AVK FairGaze MUN 2021 representing United States of America in WHO.</li>
-            </ul>
+            <div className="grid lg:grid-cols-2 gap-12 items-start">
+              {/* Profile Card Terminal Box */}
+              <div className="relative group">
+                <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-blue-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+                <div className="relative bg-[#121318] border border-orange-500/30 rounded-2xl p-6 lg:p-8 overflow-hidden">
+                  <div className="relative w-44 h-44 mx-auto mb-6">
+                    <div className="absolute inset-0 rounded-full border-2 border-orange-500/30 animate-spin-slow-reverse border-t-transparent border-b-transparent"></div>
+                    <div className="absolute inset-2 rounded-full border-2 border-blue-500/30 animate-spin-slow border-l-transparent border-r-transparent"></div>
+                    <div className="absolute inset-4 rounded-full overflow-hidden bg-[#0a0b0e] border border-slate-700 shadow-inner">
+                      <Image
+                        src={profilePic}
+                        alt="Suja Shivani S A"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="absolute bottom-3 right-3 w-4 h-4 bg-green-500 rounded-full border-2 border-[#121318] animate-pulse"></div>
+                  </div>
+
+                  <div className="font-mono text-xs sm:text-sm space-y-3">
+                    <div className="flex justify-between items-center border-b border-slate-800 pb-2">
+                      <span className="text-slate-500">OPERATOR</span>
+                      <span className="text-orange-400 font-bold tracking-widest">SUJA SHIVANI S A</span>
+                    </div>
+                    <div className="flex justify-between items-center border-b border-slate-800 pb-2">
+                      <span className="text-slate-500">DEGREE</span>
+                      <span className="text-slate-200">B.Tech Computer Science & Eng.</span>
+                    </div>
+                    <div className="flex justify-between items-center border-b border-slate-800 pb-2">
+                      <span className="text-slate-500">INSTITUTION</span>
+                      <span className="text-slate-200">VIT Chennai</span>
+                    </div>
+                    <div className="flex justify-between items-center border-b border-slate-800 pb-2">
+                      <span className="text-slate-500">ACADEMIC STANDING</span>
+                      <span className="text-amber-400 font-bold">Rank 7 (9.64 CGPA)</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-500">STATUS</span>
+                      <span className="text-green-400 flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                        Active &amp; Open to Internships
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Text Description & Metrics */}
+              <div className="space-y-6">
+                <div className="bg-[#121318] border border-[#1a1c23] rounded-2xl p-6 lg:p-8 space-y-4">
+                  <div className="flex items-center justify-between flex-wrap gap-3">
+                    <h3 className="text-xl font-bold text-white flex items-center gap-2 font-mono">
+                      <Sparkles className="w-5 h-5 text-orange-400" /> Executive Overview
+                    </h3>
+                    <a
+                      href="https://drive.google.com/file/d/1Lim865OysN_pHMkGpVQzHcvK6JaCz__n/view?usp=sharing"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-white font-mono text-xs font-bold hover:brightness-110 transition-all shadow-lg shadow-orange-500/20"
+                    >
+                      Resume Access <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+                  <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    I am a Computer Science undergraduate at Vellore Institute of Technology, Chennai, ranking 7th out of 1000+ students in my cohort.
+                  </p>
+                  <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
+                    Passionate about modern full-stack web applications, AI/ML models, and multi-agent systems, I focus on engineering scalable solutions with clean architecture and performant code.
+                  </p>
+                </div>
+
+                {/* Key Metrics Grid */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                  <div className="bg-[#121318] border border-[#1a1c23] p-4 rounded-xl text-center">
+                    <div className="text-2xl lg:text-3xl font-bold font-mono text-orange-400">9.64</div>
+                    <div className="text-[11px] text-slate-400 mt-1">Current CGPA</div>
+                  </div>
+                  <div className="bg-[#121318] border border-[#1a1c23] p-4 rounded-xl text-center">
+                    <div className="text-2xl lg:text-3xl font-bold font-mono text-white">Rank 7</div>
+                    <div className="text-[11px] text-slate-400 mt-1">Among 1000+ CSE</div>
+                  </div>
+                  <div className="bg-[#121318] border border-[#1a1c23] p-4 rounded-xl text-center">
+                    <div className="text-2xl lg:text-3xl font-bold font-mono text-blue-400">96%</div>
+                    <div className="text-[11px] text-slate-400 mt-1">ML Test Accuracy</div>
+                  </div>
+                  <div className="bg-[#121318] border border-[#1a1c23] p-4 rounded-xl text-center">
+                    <div className="text-2xl lg:text-3xl font-bold font-mono text-green-400">2028</div>
+                    <div className="text-[11px] text-slate-400 mt-1">Graduation</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+        </section>
 
-          {/* Hackathon Spotlight Card */}
-          <div className="bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-8 relative overflow-hidden">
-            <div className="absolute -right-6 -bottom-6 w-32 h-32 bg-purple-500/10 rounded-full blur-2xl"></div>
-            <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-              <Trophy className="text-amber-400" /> DataSprint 24-Hour Hackathon
-            </h3>
-            <p className="text-slate-300 text-sm leading-relaxed mb-4">
-              Competed among <strong>75+ teams</strong> at the hackathon hosted by Microsoft Innovators Club and sponsored by iAgami & MONOLITH.
-            </p>
-            <ul className="text-slate-400 text-sm space-y-1 list-disc list-inside">
-              <li>Pioneered model development achieving <strong>96% test accuracy</strong>.</li>
-              <li>Designed & fine-tuned custom CNN architecture using TensorFlow and Keras.</li>
-              <li>Visualized training loss/accuracy curves with Matplotlib and hyperparameter tuning.</li>
-            </ul>
+        {/* SKILLS SECTION (skills.json) */}
+        <section id="skills" className="min-h-screen flex items-center py-20 px-6 lg:px-12 relative border-t border-[#1c2232]">
+          <div className="max-w-6xl mx-auto w-full space-y-12">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="flex items-center gap-4">
+                <Cpu className="w-6 h-6 text-orange-400" />
+                <h2 className="font-mono text-2xl lg:text-3xl font-bold">
+                  <span className="text-slate-500">#</span> skills.json
+                </h2>
+              </div>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#161a26] border border-[#1c2232] text-xs font-mono text-slate-400">
+                <span className="w-2 h-2 rounded-full bg-orange-400 animate-pulse"></span>
+                Drag to explore skills universe
+              </div>
+            </div>
+
+            {/* Interactive Orbiting 3D Skills Sphere Container */}
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              {/* Left Column: Interactive 3D Sphere Visualizer */}
+              <div className="relative h-[380px] sm:h-[450px] w-full bg-[#161a26]/70 border border-[#1c2232] rounded-3xl p-4 flex items-center justify-center overflow-hidden group shadow-2xl">
+                {/* Concentric Orbit Rings */}
+                <div className="absolute w-[300px] h-[300px] rounded-full border border-orange-500/20 animate-spin-slow pointer-events-none" style={{ borderStyle: "dashed" }}></div>
+                <div className="absolute w-[220px] h-[220px] rounded-full border border-blue-500/20 animate-spin-slow-reverse pointer-events-none"></div>
+                <div className="absolute w-[140px] h-[140px] rounded-full border border-cyan-500/20 animate-spin-slow pointer-events-none" style={{ borderStyle: "dashed" }}></div>
+
+                {/* Center Nucleus */}
+                <div className="z-10 w-24 h-24 rounded-full bg-gradient-to-br from-orange-500/20 to-blue-600/20 border border-orange-500/40 backdrop-blur-md flex flex-col items-center justify-center text-center p-2 shadow-[0_0_30px_rgba(249,115,22,0.3)]">
+                  <Cpu className="w-6 h-6 text-orange-400 mb-1 animate-pulse" />
+                  <span className="text-[10px] font-mono text-white font-bold tracking-wider">CORE.AI</span>
+                </div>
+
+                {/* Floating Orbiting Tech Pills */}
+                {[
+                  { name: "Java", pos: "top-8 left-12", color: "border-orange-500/40 text-orange-400" },
+                  { name: "Python", pos: "top-12 right-14", color: "border-amber-400/40 text-amber-300" },
+                  { name: "Next.js", pos: "bottom-16 left-10", color: "border-blue-400/40 text-blue-400" },
+                  { name: "React", pos: "bottom-12 right-12", color: "border-cyan-400/40 text-cyan-300" },
+                  { name: "PostgreSQL", pos: "top-1/2 left-4 -translate-y-1/2", color: "border-emerald-400/40 text-emerald-400" },
+                  { name: "Docker", pos: "top-1/2 right-4 -translate-y-1/2", color: "border-purple-400/40 text-purple-300" },
+                  { name: "FastAPI", pos: "top-4 left-1/2 -translate-x-1/2", color: "border-teal-400/40 text-teal-300" },
+                  { name: "TypeScript", pos: "bottom-4 left-1/2 -translate-x-1/2", color: "border-indigo-400/40 text-indigo-300" },
+                ].map((item, idx) => (
+                  <div
+                    key={idx}
+                    className={`absolute ${item.pos} px-3 py-1.5 rounded-full bg-[#11141d]/90 border ${item.color} text-xs font-mono shadow-lg hover:scale-110 hover:shadow-[0_0_15px_rgba(249,115,22,0.4)] transition-all cursor-pointer z-20`}
+                  >
+                    {item.name}
+                  </div>
+                ))}
+              </div>
+
+              {/* Right Column: Structured Module Cards */}
+              <div className="space-y-4">
+                {/* Languages */}
+                <div className="bg-[#161a26] border border-[#1c2232] rounded-2xl p-5 hover:border-orange-500/50 transition-all duration-300 shadow-xl">
+                  <div className="flex items-center justify-between mb-3 pb-2 border-b border-[#1c2232]">
+                    <div className="flex items-center gap-2">
+                      <Code2 className="w-4 h-4 text-orange-400" />
+                      <h3 className="font-mono font-bold text-white text-sm">Languages</h3>
+                    </div>
+                    <span className="font-mono text-[10px] text-slate-500">module_01</span>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {["Java", "Python", "C", "C++", "JavaScript", "TypeScript", "Dart", "HTML5", "CSS3"].map((skill) => (
+                      <span
+                        key={skill}
+                        className="px-2.5 py-1 rounded-md bg-[#11141d] border border-[#1c2232] text-xs font-mono text-slate-300 hover:border-orange-400/50 hover:text-orange-400 transition-colors"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Frameworks & Web */}
+                <div className="bg-[#161a26] border border-[#1c2232] rounded-2xl p-5 hover:border-blue-500/50 transition-all duration-300 shadow-xl">
+                  <div className="flex items-center justify-between mb-3 pb-2 border-b border-[#1c2232]">
+                    <div className="flex items-center gap-2">
+                      <Terminal className="w-4 h-4 text-blue-400" />
+                      <h3 className="font-mono font-bold text-white text-sm">Frameworks &amp; Web</h3>
+                    </div>
+                    <span className="font-mono text-[10px] text-slate-500">module_02</span>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {["React.js", "Next.js", "Node.js", "Express.js", "FastAPI", "Flutter", "Tailwind CSS", "TensorFlow", "Keras"].map((skill) => (
+                      <span
+                        key={skill}
+                        className="px-2.5 py-1 rounded-md bg-[#11141d] border border-[#1c2232] text-xs font-mono text-slate-300 hover:border-blue-400/50 hover:text-blue-400 transition-colors"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Databases & Tools */}
+                <div className="bg-[#161a26] border border-[#1c2232] rounded-2xl p-5 hover:border-amber-500/50 transition-all duration-300 shadow-xl">
+                  <div className="flex items-center justify-between mb-3 pb-2 border-b border-[#1c2232]">
+                    <div className="flex items-center gap-2">
+                      <Cpu className="w-4 h-4 text-amber-400" />
+                      <h3 className="font-mono font-bold text-white text-sm">Databases &amp; Tools</h3>
+                    </div>
+                    <span className="font-mono text-[10px] text-slate-500">module_03</span>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {["PostgreSQL", "MySQL", "Docker", "Git & GitHub", "Linux", "AWS", "AutoGen", "REST APIs", "JWT"].map((skill) => (
+                      <span
+                        key={skill}
+                        className="px-2.5 py-1 rounded-md bg-[#11141d] border border-[#1c2232] text-xs font-mono text-slate-300 hover:border-amber-400/50 hover:text-amber-400 transition-colors"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Technical Skills Section */}
-      <section id="skills" className="py-24 px-6 bg-slate-900/30 border-t border-slate-800 relative z-20">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex items-center gap-3 mb-12">
-            <Cpu className="w-7 h-7 text-brand-500" />
-            <h2 className="text-3xl font-bold text-white tracking-tight">Technical Proficiency</h2>
-          </div>
+        {/* CERTIFICATIONS SECTION (certs.key) */}
+        <section id="certifications" className="min-h-screen flex items-center py-20 px-6 lg:px-12 relative border-t border-[#1c2232]">
+          <div className="max-w-6xl mx-auto w-full">
+            <div className="flex items-center gap-4 mb-12">
+              <BadgeCheck className="w-6 h-6 text-orange-400" />
+              <h2 className="font-mono text-2xl lg:text-3xl font-bold">
+                <span className="text-slate-500">#</span> certs.key
+              </h2>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-6">
-              <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
-                <Code2 className="w-5 h-5 text-brand-500" /> Languages
+            {/* Certifications Grid */}
+            <div className="bg-[#161a26] border border-[#1c2232] rounded-2xl p-6 lg:p-8 shadow-2xl">
+              <h3 className="font-mono font-bold text-white text-lg mb-6 flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-orange-400" /> Certifications &amp; Credentials
               </h3>
-              <div className="flex flex-wrap gap-2">
-                <span className="bg-slate-800 text-slate-300 px-3 py-1.5 rounded-md text-sm border border-slate-700">Java</span>
-                <span className="bg-slate-800 text-slate-300 px-3 py-1.5 rounded-md text-sm border border-slate-700">Python</span>
-                <span className="bg-slate-800 text-slate-300 px-3 py-1.5 rounded-md text-sm border border-slate-700">C</span>
-                <span className="bg-slate-800 text-slate-300 px-3 py-1.5 rounded-md text-sm border border-slate-700">C++</span>
-                <span className="bg-slate-800 text-slate-300 px-3 py-1.5 rounded-md text-sm border border-slate-700">JavaScript</span>
-                <span className="bg-slate-800 text-slate-300 px-3 py-1.5 rounded-md text-sm border border-slate-700">Dart</span>
-              </div>
-            </div>
 
-            <div className="bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-6">
-              <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
-                <Layers className="w-5 h-5 text-brand-500" /> Web & Mobile
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                <span className="bg-slate-800 text-slate-300 px-3 py-1.5 rounded-md text-sm border border-slate-700">React.js</span>
-                <span className="bg-slate-800 text-slate-300 px-3 py-1.5 rounded-md text-sm border border-slate-700">Next.js</span>
-                <span className="bg-slate-800 text-slate-300 px-3 py-1.5 rounded-md text-sm border border-slate-700">Node.js</span>
-                <span className="bg-slate-800 text-slate-300 px-3 py-1.5 rounded-md text-sm border border-slate-700">Express.js</span>
-                <span className="bg-slate-800 text-slate-300 px-3 py-1.5 rounded-md text-sm border border-slate-700">Flutter</span>
-              </div>
-            </div>
-
-            <div className="bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-6">
-              <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
-                <Database className="w-5 h-5 text-brand-500" /> Databases & Tools
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                <span className="bg-slate-800 text-slate-300 px-3 py-1.5 rounded-md text-sm border border-slate-700">PostgreSQL</span>
-                <span className="bg-slate-800 text-slate-300 px-3 py-1.5 rounded-md text-sm border border-slate-700">MySQL</span>
-                <span className="bg-slate-800 text-slate-300 px-3 py-1.5 rounded-md text-sm border border-slate-700">Git & GitHub</span>
-                <span className="bg-slate-800 text-slate-300 px-3 py-1.5 rounded-md text-sm border border-slate-700">Docker</span>
-                <span className="bg-slate-800 text-slate-300 px-3 py-1.5 rounded-md text-sm border border-slate-700">Linux</span>
-                <span className="bg-slate-800 text-slate-300 px-3 py-1.5 rounded-md text-sm border border-slate-700">AWS</span>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {[
+                  {
+                    title: "Career Essentials in Generative AI",
+                    issuer: "Microsoft & LinkedIn",
+                    icon: BadgeCheck,
+                    link: "certificate/CertificateOfCompletion_Career%20Essentials%20in%20Generative%20AI%20by%20Microsoft%20and%20LinkedIn.pdf",
+                  },
+                  {
+                    title: "Ethics in the Age of Generative AI",
+                    issuer: "LinkedIn Learning",
+                    icon: Brain,
+                    link: "certificate/CertificateOfCompletion_Ethics%20in%20the%20Age%20of%20Generative%20AI%20(2).pdf",
+                  },
+                  {
+                    title: "Docker Foundations Professional Certificate",
+                    issuer: "Docker Inc",
+                    icon: Container,
+                    link: "certificate/new/CertificateOfCompletion_Docker%20Foundations%20Professional%20Certificate.pdf",
+                  },
+                  {
+                    title: "DataSprint '25 Finals Hackathon",
+                    issuer: "Microsoft Innovators Club Finalist",
+                    icon: Trophy,
+                    link: "certificate/new/DataSprint'25_Finals.pdf",
+                  },
+                  {
+                    title: "XAI AgentForce",
+                    issuer: "AI Agent Certification",
+                    icon: Bot,
+                    link: "certificate/new/XAI_AgentForce.pdf",
+                  },
+                  {
+                    title: "What Is Generative AI?",
+                    issuer: "LinkedIn Learning",
+                    icon: Sparkles,
+                    link: "certificate/CertificateOfCompletion_What%20Is%20Generative%20AI.pdf",
+                  },
+                  {
+                    title: "Your Top AI Questions Answered",
+                    issuer: "AI Literacy Program",
+                    icon: MessageCircleQuestion,
+                    link: "certificate/CertificateOfCompletion_Your%20Top%20AI%20Questions%20Answered%20AI%20Literacy%20for%20Everyone.pdf",
+                  },
+                  {
+                    title: "LogiTech Participation Certificate",
+                    issuer: "Technical Event",
+                    icon: ShieldCheck,
+                    link: "certificate/LogiTech_part.pdf",
+                  },
+                  {
+                    title: "Effective Sales and Marketing Strategies",
+                    issuer: "Professional Development",
+                    icon: ChartNoAxesCombined,
+                    link: "certificate/new/Effective%20Sales%20and%20Marketing%20Strategies.pdf",
+                  },
+                ].map((cert, index) => {
+                  const IconComp = cert.icon;
+                  return (
+                    <a
+                      key={index}
+                      href={cert.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-start gap-3 bg-[#11141d] p-4 rounded-xl border border-[#1c2232] hover:border-orange-500/40 hover:bg-[#1c2232]/60 transition-all group"
+                    >
+                      <IconComp className="w-5 h-5 text-orange-400 mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
+                      <div className="min-w-0">
+                        <div className="font-semibold text-sm text-white truncate group-hover:text-orange-400 transition-colors">
+                          {cert.title}
+                        </div>
+                        <div className="text-xs text-slate-500 mt-0.5">{cert.issuer}</div>
+                      </div>
+                    </a>
+                  );
+                })}
               </div>
             </div>
           </div>
+        </section>
 
-          {/* Certifications Row */}
-          <div className="mt-8 bg-cardbg/90 backdrop-blur-sm border border-slate-800 rounded-xl p-6">
-            <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
-              <CheckCircle2 className="w-5 h-5 text-brand-500" /> Certificates
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-300">
-              <a href="certificate/CertificateOfCompletion_Career%20Essentials%20in%20Generative%20AI%20by%20Microsoft%20and%20LinkedIn.pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
-                <BadgeCheck className="text-brand-500 mt-0.5" />
-                <div>
-                  <div className="font-semibold text-white">Career Essentials in Generative AI</div>
-                  <div className="text-xs text-slate-400 mt-1">Microsoft & LinkedIn</div>
+        {/* EXPERIENCE SECTION (experience.git) */}
+        <section id="experience" className="min-h-screen flex items-center py-20 px-6 lg:px-12 relative border-t border-[#1a1c23]">
+          <div className="max-w-6xl mx-auto w-full">
+            <div className="flex items-center gap-4 mb-12">
+              <GitBranch className="w-6 h-6 text-orange-400" />
+              <h2 className="font-mono text-2xl lg:text-3xl font-bold">
+                <span className="text-slate-500">#</span> experience.git
+              </h2>
+            </div>
+
+            <div className="space-y-6">
+              {[
+                {
+                  role: "Full-Stack Development Intern",
+                  company: "UV Farms",
+                  type: "Internship",
+                  period: "May 2026 – Jun 2026",
+                  details: [
+                    "Developed full-stack web solutions using Next.js, integrating responsive user interfaces with robust backend API architecture.",
+                    "Built core features across ProxiHub, Raaj Hotels, and VidhyaBot platforms, optimizing frontend performance, booking workflows, and document processing.",
+                  ],
+                },
+                {
+                  role: "Student Coordinator & Master of Ceremonies (MC)",
+                  company: "VNEST (VIT Incubation Center)",
+                  type: "Leadership & Event Coordination",
+                  period: "2025",
+                  details: [
+                    "Organized and hosted key events 'Angel Investment and Venture Capital Funding Opportunities' and 'Effective Sales and Marketing Strategies for Startups'.",
+                  ],
+                },
+                {
+                  role: "Projects Team Member",
+                  company: "CodeChef VIT-Chennai Chapter",
+                  type: "Core Team",
+                  period: "Jan 2026 – Present",
+                  details: [
+                    "Collaborating with team members to design technical events, build competitive programming solutions, and contribute to open-source software initiatives.",
+                  ],
+                },
+                {
+                  role: "Management Team Member",
+                  company: "IEEE Women in Engineering (WIE)",
+                  type: "Student Chapter",
+                  period: "Sep 2024 – Jan 2026",
+                  details: [
+                    "Organized technical workshops, webinars, and outreach campaigns to empower and encourage women in engineering and tech streams.",
+                  ],
+                },
+                {
+                  role: "Delegate & Model UN Representative",
+                  company: "HPS & AVK FairGaze MUN",
+                  type: "Diplomacy & Public Speaking",
+                  period: "2020 – 2021",
+                  details: [
+                    "High Commendation – HPS MUN 2020, representing Australia in the United Nations Environment Assembly (UNEA).",
+                    "Special Mention – AVK FairGaze MUN 2021, representing the United States of America in the World Health Organization (WHO) committee.",
+                  ],
+                },
+              ].map((exp, idx) => (
+                <div
+                  key={idx}
+                  className="bg-[#121318] border border-[#1a1c23] rounded-2xl p-6 lg:p-8 hover:border-orange-500/40 transition-all relative overflow-hidden group"
+                >
+                  <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-orange-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-2">
+                    <div>
+                      <h3 className="text-xl font-bold text-white font-mono">{exp.role}</h3>
+                      <p className="text-orange-400 font-mono text-sm">{exp.company} • {exp.type}</p>
+                    </div>
+                    <span className="text-xs font-mono text-slate-400 bg-[#0a0b0e] border border-slate-800 px-3 py-1 rounded-full w-fit">
+                      {exp.period}
+                    </span>
+                  </div>
+                  <ul className="list-disc list-inside text-slate-300 text-sm space-y-2 leading-relaxed">
+                    {exp.details.map((item, dIdx) => (
+                      <li key={dIdx}>{item}</li>
+                    ))}
+                  </ul>
                 </div>
-              </a>
-              <a href="certificate/CertificateOfCompletion_Ethics%20in%20the%20Age%20of%20Generative%20AI%20(2).pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
-                <Brain className="text-brand-500 mt-0.5" />
-                <div>
-                  <div className="font-semibold text-white">Ethics in the Age of Generative AI</div>
-                  <div className="text-xs text-slate-400 mt-1">LinkedIn Learning</div>
-                </div>
-              </a>
-              <a href="certificate/CertificateOfCompletion_SummerInternship.pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
-                <Briefcase className="text-brand-500 mt-0.5" />
-                <div>
-                  <div className="font-semibold text-white">Summer Internship Certificate</div>
-                  <div className="text-xs text-slate-400 mt-1">Completion Credential</div>
-                </div>
-              </a>
-              <a href="certificate/CertificateOfCompletion_What%20Is%20Generative%20AI.pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
-                <SparklesIcon className="text-brand-500 mt-0.5" />
-                <div>
-                  <div className="font-semibold text-white">What Is Generative AI?</div>
-                  <div className="text-xs text-slate-400 mt-1">LinkedIn Learning</div>
-                </div>
-              </a>
-              <a href="certificate/CertificateOfCompletion_Your%20Top%20AI%20Questions%20Answered%20AI%20Literacy%20for%20Everyone.pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
-                <MessageCircleQuestion className="text-brand-500 mt-0.5" />
-                <div>
-                  <div className="font-semibold text-white">Your Top AI Questions Answered</div>
-                  <div className="text-xs text-slate-400 mt-1">AI Literacy for Everyone</div>
-                </div>
-              </a>
-              <a href="certificate/LogiTech_part.pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
-                <ShieldCheck className="text-brand-500 mt-0.5" />
-                <div>
-                  <div className="font-semibold text-white">LogiTech Participation Certificate</div>
-                  <div className="text-xs text-slate-400 mt-1">Event Participation</div>
-                </div>
-              </a>
-              <a href="certificate/new/CertificateOfCompletion_Docker%20Foundations%20Professional%20Certificate.pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
-                <Container className="text-brand-500 mt-0.5" />
-                <div>
-                  <div className="font-semibold text-white">Docker Foundations Professional Certificate</div>
-                  <div className="text-xs text-slate-400 mt-1">Docker Inc</div>
-                </div>
-              </a>
-              <a href="certificate/new/DataSprint'25_Finals.pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
-                <Trophy className="text-brand-500 mt-0.5" />
-                <div>
-                  <div className="font-semibold text-white">DataSprint &apos;25 Finals</div>
-                  <div className="text-xs text-slate-400 mt-1">Hackathon Finalist Certificate</div>
-                </div>
-              </a>
-              <a href="certificate/new/Effective%20Sales%20and%20Marketing%20Strategies.pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
-                <ChartNoAxesCombined className="text-brand-500 mt-0.5" />
-                <div>
-                  <div className="font-semibold text-white">Effective Sales and Marketing Strategies</div>
-                  <div className="text-xs text-slate-400 mt-1">Professional Learning</div>
-                </div>
-              </a>
-              <a href="certificate/new/XAI_AgentForce.pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
-                <Bot className="text-brand-500 mt-0.5" />
-                <div>
-                  <div className="font-semibold text-white">XAI AgentForce</div>
-                  <div className="text-xs text-slate-400 mt-1">AI Agent Certification</div>
-                </div>
-              </a>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Footer */}
-      <footer id="contact" className="py-12 border-t border-slate-800 bg-darkbg text-center relative z-20">
-        <div className="max-w-6xl mx-auto px-6">
-          <h3 className="text-2xl font-bold text-white mb-2">Let&apos;s Connect</h3>
-          <p className="text-slate-400 text-sm mb-6">Open to software engineering internships and collaborative technical projects.</p>
-          <p className="text-slate-300 text-sm mb-8">
-            <Mail className="inline w-4 h-4 mr-1 text-brand-500" /> sujashivani.s2024@vitstudent.ac.in
-          </p>
+        {/* PROJECTS SECTION (projects/) */}
+        <section id="projects" className="min-h-screen flex items-center py-20 px-6 lg:px-12 relative border-t border-[#1a1c23]">
+          <div className="max-w-6xl mx-auto w-full">
+            <div className="flex items-center gap-4 mb-12">
+              <FolderOpen className="w-6 h-6 text-orange-400" />
+              <h2 className="font-mono text-2xl lg:text-3xl font-bold">
+                <span className="text-slate-500">#</span> projects/
+              </h2>
+            </div>
 
-          <p className="text-xs text-slate-500">&copy; 2026 Suja Shivani S A. All rights reserved.</p>
-        </div>
-      </footer>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[
+                {
+                  tag: "AI & Computer Vision",
+                  badge: "DataSprint '25 Finalist",
+                  title: "Potato Disease & Defect Detector",
+                  desc: "Built a CNN model achieving 96% accuracy to classify hidden internal defects (like hollow heart) from X-ray and leaf images. Integrated with Python/TypeScript backends.",
+                  tech: ["Python", "TensorFlow", "Keras", "TypeScript"],
+                  repo: "https://github.com/Shivani-369/my-potato-detector-software",
+                },
+                {
+                  tag: "Full-Stack Web",
+                  title: "Personal Finance Tracker",
+                  desc: "A secure expense and investment tracking platform featuring JWT authentication, responsive dashboards with Recharts, and custom PostgreSQL database designs.",
+                  tech: ["React.js", "Node.js", "PostgreSQL", "JWT"],
+                  repo: "https://github.com/lavishjha2024-w/Personal-Finance-Tracker",
+                },
+                {
+                  tag: "Mobile App",
+                  title: "ShineShelf App",
+                  desc: "Cross-platform social-commerce application. Integrated material 3 design, Provider state management, REST APIs, and local secure storage.",
+                  tech: ["Flutter", "Dart", "REST APIs", "Provider"],
+                  repo: "https://github.com/NEHA4151/ShineShelf_app",
+                },
+                {
+                  tag: "Web Game",
+                  title: "Wordwars: Word Guessing Game",
+                  desc: "A clean browser-based word puzzle game where players guess a 5-letter word in six tries using color-coded feedback and a mobile-friendly keyboard.",
+                  tech: ["HTML5", "CSS3", "JavaScript", "Tailwind CSS"],
+                  link: "https://wordwars-pi.vercel.app/",
+                },
+              ].map((proj, idx) => (
+                <div
+                  key={idx}
+                  className="bg-[#121318] border border-[#1a1c23] rounded-2xl p-6 flex flex-col justify-between hover:border-orange-500/50 transition-all group"
+                >
+                  <div>
+                    <div className="flex items-center justify-between gap-2 mb-4">
+                      <span className="text-[10px] font-mono font-semibold px-2.5 py-1 rounded bg-orange-500/10 text-orange-400 border border-orange-500/20">
+                        {proj.tag}
+                      </span>
+                      {proj.badge && (
+                        <span className="text-[10px] font-mono text-amber-400 font-semibold bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
+                          {proj.badge}
+                        </span>
+                      )}
+                    </div>
+
+                    <h3 className="text-xl font-bold font-mono text-white mb-2 group-hover:text-orange-400 transition-colors">
+                      {proj.title}
+                    </h3>
+
+                    <p className="text-slate-400 text-xs sm:text-sm mb-6 leading-relaxed">
+                      {proj.desc}
+                    </p>
+
+                    <div className="flex items-center gap-3 mb-4">
+                      {proj.repo && (
+                        <a
+                          href={proj.repo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-300 hover:text-orange-400 font-semibold transition-colors bg-[#11141d] px-3 py-1.5 rounded-lg border border-[#1c2232]"
+                        >
+                          Repository <ExternalLink className="w-3 h-3" />
+                        </a>
+                      )}
+                      {proj.link && (
+                        <a
+                          href={proj.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 text-xs font-mono text-orange-400 hover:text-orange-300 font-semibold transition-colors bg-orange-500/10 px-3 py-1.5 rounded-lg border border-orange-500/20"
+                        >
+                          Play Demo <ExternalLink className="w-3 h-3" />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap gap-1.5">
+                    {proj.tech.map((t) => (
+                      <span key={t} className="text-[11px] font-mono bg-[#0a0b0e] text-slate-400 px-2.5 py-1 rounded border border-slate-800">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ACHIEVEMENTS SECTION (milestones.log) */}
+        <section id="achievements" className="min-h-screen flex items-center py-20 px-6 lg:px-12 relative border-t border-[#1a1c23]">
+          <div className="max-w-6xl mx-auto w-full">
+            <div className="flex items-center gap-4 mb-12">
+              <Award className="w-6 h-6 text-orange-400" />
+              <h2 className="font-mono text-2xl lg:text-3xl font-bold">
+                <span className="text-slate-500">#</span> milestones.log
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Card 1 */}
+              <div className="bg-[#121318] border border-[#1a1c23] rounded-2xl p-8 relative overflow-hidden">
+                <div className="absolute -right-6 -bottom-6 w-32 h-32 bg-orange-500/10 rounded-full blur-2xl"></div>
+                <h3 className="text-xl font-bold font-mono text-white mb-4 flex items-center gap-2">
+                  <GraduationCap className="text-orange-400" /> Academic Distinction
+                </h3>
+                <p className="text-slate-300 text-sm leading-relaxed mb-4">
+                  Secured <strong className="text-orange-400">Rank 7 in B.Tech CSE (Core) among 1000+ students</strong> at VIT Chennai with a CGPA of 9.64.
+                </p>
+                <ul className="text-slate-400 text-xs sm:text-sm space-y-2 list-disc list-inside">
+                  <li>High Commendation HPS MUN 2020 representing Australia in UNEA.</li>
+                  <li>Special Mention AVK FairGaze MUN 2021 representing USA in WHO.</li>
+                </ul>
+              </div>
+
+              {/* Card 2 */}
+              <div className="bg-[#121318] border border-[#1a1c23] rounded-2xl p-8 relative overflow-hidden">
+                <div className="absolute -right-6 -bottom-6 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl"></div>
+                <h3 className="text-xl font-bold font-mono text-white mb-4 flex items-center gap-2">
+                  <Trophy className="text-amber-400" /> DataSprint 24-Hour Hackathon
+                </h3>
+                <p className="text-slate-300 text-sm leading-relaxed mb-4">
+                  Competed among <strong>75+ teams</strong> in the hackathon hosted by Microsoft Innovators Club and sponsored by iAgami &amp; MONOLITH.
+                </p>
+                <ul className="text-slate-400 text-xs sm:text-sm space-y-2 list-disc list-inside">
+                  <li>Pioneered CNN model achieving <strong>96% test accuracy</strong>.</li>
+                  <li>Designed &amp; fine-tuned custom architecture using TensorFlow/Keras.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* CONTACT SECTION (contact.exe) */}
+        <section id="contact" className="py-24 px-6 lg:px-12 border-t border-[#1a1c23] bg-[#0a0b0e] relative text-center">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="font-mono text-3xl lg:text-4xl font-bold text-white mb-4">
+              &lt;<span className="text-orange-400">Let&apos;s Connect</span> /&gt;
+            </h2>
+            <p className="text-slate-400 text-sm sm:text-base max-w-xl mx-auto mb-8">
+              Open to full-stack engineering internships, AI/ML research collaborations, and open-source opportunities.
+            </p>
+
+            <div className="inline-flex flex-col sm:flex-row items-center gap-4 bg-[#121318] border border-[#1a1c23] p-4 rounded-2xl mb-12">
+              <div className="flex items-center gap-3 text-slate-200 font-mono text-sm px-4">
+                <Mail className="w-5 h-5 text-orange-400" />
+                sujashivani.s2024@vitstudent.ac.in
+              </div>
+              <a
+                href="mailto:sujashivani.s2024@vitstudent.ac.in"
+                className="bg-orange-500 hover:bg-orange-600 text-white font-mono text-xs font-bold px-6 py-2.5 rounded-xl transition-all shadow-lg shadow-orange-500/20"
+              >
+                Send Signal &rarr;
+              </a>
+            </div>
+
+            <p className="text-xs font-mono text-slate-500">
+              &copy; 2026 Suja Shivani S A. Engineered with Next.js.
+            </p>
+          </div>
+        </section>
+      </main>
     </div>
   );
 }
