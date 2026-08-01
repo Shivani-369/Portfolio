@@ -1,4 +1,5 @@
 import Image from "next/image";
+import profilePic from "../../public/og_c.jpeg";
 import {
   Sparkles,
   Code2,
@@ -60,7 +61,7 @@ export default function Home() {
 
           <div className="flex justify-center mb-8">
             <Image
-              src="/og_c.jpeg"
+              src={profilePic}
               alt="Profile photo"
               width={176}
               height={176}
