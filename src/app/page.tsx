@@ -406,70 +406,70 @@ export default function Home() {
               <CheckCircle2 className="w-5 h-5 text-brand-500" /> Certificates
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-300">
-              <a href="/certificate/CertificateOfCompletion_Career%20Essentials%20in%20Generative%20AI%20by%20Microsoft%20and%20LinkedIn.pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
+              <a href="certificate/CertificateOfCompletion_Career%20Essentials%20in%20Generative%20AI%20by%20Microsoft%20and%20LinkedIn.pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
                 <BadgeCheck className="text-brand-500 mt-0.5" />
                 <div>
                   <div className="font-semibold text-white">Career Essentials in Generative AI</div>
                   <div className="text-xs text-slate-400 mt-1">Microsoft & LinkedIn</div>
                 </div>
               </a>
-              <a href="/certificate/CertificateOfCompletion_Ethics%20in%20the%20Age%20of%20Generative%20AI%20(2).pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
+              <a href="certificate/CertificateOfCompletion_Ethics%20in%20the%20Age%20of%20Generative%20AI%20(2).pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
                 <Brain className="text-brand-500 mt-0.5" />
                 <div>
                   <div className="font-semibold text-white">Ethics in the Age of Generative AI</div>
                   <div className="text-xs text-slate-400 mt-1">LinkedIn Learning</div>
                 </div>
               </a>
-              <a href="/certificate/CertificateOfCompletion_SummerInternship.pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
+              <a href="certificate/CertificateOfCompletion_SummerInternship.pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
                 <Briefcase className="text-brand-500 mt-0.5" />
                 <div>
                   <div className="font-semibold text-white">Summer Internship Certificate</div>
                   <div className="text-xs text-slate-400 mt-1">Completion Credential</div>
                 </div>
               </a>
-              <a href="/certificate/CertificateOfCompletion_What%20Is%20Generative%20AI.pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
+              <a href="certificate/CertificateOfCompletion_What%20Is%20Generative%20AI.pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
                 <SparklesIcon className="text-brand-500 mt-0.5" />
                 <div>
                   <div className="font-semibold text-white">What Is Generative AI?</div>
                   <div className="text-xs text-slate-400 mt-1">LinkedIn Learning</div>
                 </div>
               </a>
-              <a href="/certificate/CertificateOfCompletion_Your%20Top%20AI%20Questions%20Answered%20AI%20Literacy%20for%20Everyone.pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
+              <a href="certificate/CertificateOfCompletion_Your%20Top%20AI%20Questions%20Answered%20AI%20Literacy%20for%20Everyone.pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
                 <MessageCircleQuestion className="text-brand-500 mt-0.5" />
                 <div>
                   <div className="font-semibold text-white">Your Top AI Questions Answered</div>
                   <div className="text-xs text-slate-400 mt-1">AI Literacy for Everyone</div>
                 </div>
               </a>
-              <a href="/certificate/LogiTech_part.pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
+              <a href="certificate/LogiTech_part.pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
                 <ShieldCheck className="text-brand-500 mt-0.5" />
                 <div>
                   <div className="font-semibold text-white">LogiTech Participation Certificate</div>
                   <div className="text-xs text-slate-400 mt-1">Event Participation</div>
                 </div>
               </a>
-              <a href="/certificate/new/CertificateOfCompletion_Docker%20Foundations%20Professional%20Certificate.pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
+              <a href="certificate/new/CertificateOfCompletion_Docker%20Foundations%20Professional%20Certificate.pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
                 <Container className="text-brand-500 mt-0.5" />
                 <div>
                   <div className="font-semibold text-white">Docker Foundations Professional Certificate</div>
                   <div className="text-xs text-slate-400 mt-1">Docker Inc</div>
                 </div>
               </a>
-              <a href="/certificate/new/DataSprint'25_Finals.pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
+              <a href="certificate/new/DataSprint'25_Finals.pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
                 <Trophy className="text-brand-500 mt-0.5" />
                 <div>
                   <div className="font-semibold text-white">DataSprint &apos;25 Finals</div>
                   <div className="text-xs text-slate-400 mt-1">Hackathon Finalist Certificate</div>
                 </div>
               </a>
-              <a href="/certificate/new/Effective%20Sales%20and%20Marketing%20Strategies.pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
+              <a href="certificate/new/Effective%20Sales%20and%20Marketing%20Strategies.pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
                 <ChartNoAxesCombined className="text-brand-500 mt-0.5" />
                 <div>
                   <div className="font-semibold text-white">Effective Sales and Marketing Strategies</div>
                   <div className="text-xs text-slate-400 mt-1">Professional Learning</div>
                 </div>
               </a>
-              <a href="/certificate/new/XAI_AgentForce.pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
+              <a href="certificate/new/XAI_AgentForce.pdf" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 bg-slate-900/50 p-3 rounded-lg border border-slate-800 hover:border-brand-500/40 transition-all">
                 <Bot className="text-brand-500 mt-0.5" />
                 <div>
                   <div className="font-semibold text-white">XAI AgentForce</div>
