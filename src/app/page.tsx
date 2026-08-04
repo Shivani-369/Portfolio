@@ -80,6 +80,15 @@ export default function Home() {
       {/* Grid Pattern Background */}
       <div className="fixed inset-0 grid-bg pointer-events-none z-0"></div>
 
+      {/* Subtle Computer Science Doodle Theme Background */}
+      <div
+        className="fixed inset-0 pointer-events-none z-0 flex items-center justify-center opacity-[0.09] mix-blend-screen bg-center bg-no-repeat"
+        style={{
+          backgroundImage: "url('/cs-doodle.png')",
+          backgroundSize: "min(85vw, 750px)",
+        }}
+      />
+
       {/* Right Desktop Floating Indicator Bar */}
       <div className="fixed right-6 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col items-center gap-4">
         <div className="absolute top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-orange-500/20 to-transparent -z-10"></div>
