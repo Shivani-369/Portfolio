@@ -769,7 +769,7 @@ export default function Home() {
                 {
                   tag: "Mobile App",
                   title: "ShineShelf App",
-                  desc: "Cross-platform social-commerce application. Integrated material 3 design, Provider state management, REST APIs, and local secure storage.",
+                  desc: "A smart E-Library management system & cross-platform mobile application. Integrated Material 3 design, Provider state management, REST APIs, and local secure storage.",
                   tech: ["Flutter", "Dart", "REST APIs", "Provider"],
                   repo: "https://github.com/NEHA4151/ShineShelf_app",
                 },
