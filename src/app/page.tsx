@@ -298,7 +298,7 @@ export default function Home() {
                     <div className="pl-4"><span className="text-slate-600 mr-4 select-none">4</span><span className="text-purple-400">return</span> (</div>
                     <div className="pl-8"><span className="text-slate-600 mr-4 select-none">5</span>&lt;<span className="text-blue-400">SoftwareEngineer</span></div>
                     <div className="pl-12"><span className="text-slate-600 mr-4 select-none">6</span><span className="text-orange-400">name</span>=<span className="text-green-400">&quot;Suja Shivani S A&quot;</span></div>
-                    <div className="pl-12"><span className="text-slate-600 mr-4 select-none">7</span><span className="text-orange-400">gpa</span>=&#123;<span className="text-amber-400">9.64</span>&#125;</div>
+                    <div className="pl-12"><span className="text-slate-600 mr-4 select-none">7</span><span className="text-orange-400">cgpa</span>=&#123;<span className="text-amber-400">9.64</span>&#125;</div>
                     <div className="pl-12"><span className="text-slate-600 mr-4 select-none">8</span><span className="text-orange-400">rank</span>=<span className="text-green-400">&quot;7 / 1000+ CSE Students&quot;</span></div>
                     <div className="pl-12"><span className="text-slate-600 mr-4 select-none">9</span><span className="text-orange-400">specialization</span>=<span className="text-green-400">&quot;Full-Stack &amp; AI Systems&quot;</span></div>
                     <div className="pl-8"><span className="text-slate-600 mr-4 select-none">10</span>/&gt;</div>
